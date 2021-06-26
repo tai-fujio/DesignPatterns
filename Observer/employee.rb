@@ -1,30 +1,21 @@
+require './subject.rb'
 require './payroll_observer.rb'
 require './fee_collector_observer.rb'
 
 class Employee
-  attr_reader :name, :title, :salary
+  include Subject
+
+  attr_reader :name, :salary
 
   def initialize(name, salary)
+    super()
     @name = name
     @salary = salary
-    @observers = []
   end
 
   def salary=(salary)
     @salary = salary
     notify_observers
-  end
-
-  def add_observer(*observers)
-    observers.each { |observer| @observers << observer }
-  end
-
-  def delete_observer(*observers)
-    observers.each { |observer| @observers.delete(observer) }
-  end
-
-  def notify_observers
-    @observers.each { |observer| observer.notify(self) }
   end
 end
 
