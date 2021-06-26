@@ -15,7 +15,7 @@ class Employee
 
   def salary=(salary)
     @salary = salary
-    notify_observers(self)
+    notify_observers
   end
 end
 

@@ -14,10 +14,10 @@ module Subject
     observers.each { |observer| @observers.delete(observer) }
   end
 
-  def notify_observers(employee)
+  def notify_observers
     @observers.each { |observer| 
       if observer.respond_to?(:notify)
-        observer.notify(employee)
+        observer.notify(self)
       elsif observer.respond_to?(:call)
         observer.call(self)
       end
