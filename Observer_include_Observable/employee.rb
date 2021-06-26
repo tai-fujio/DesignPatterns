@@ -1,9 +1,9 @@
-require './subject.rb'
+require 'observer'
 require './payroll_observer.rb'
 require './fee_collector_observer.rb'
 
 class Employee
-  include Subject
+  include Observable
 
   attr_reader :name, :salary
 
@@ -15,14 +15,12 @@ class Employee
 
   def salary=(salary)
     @salary = salary
+    changed
     notify_observers(self)
   end
 end
 
 employee = Employee.new('従業員A','255_000')
-payroll = PayrollObserver.new
-fee = FeeCollectorObserver.new
-end_of_msg = Proc.new {|employee|
-  puts("#{employee.name}に関するnotifyは以上です。")}
-employee.add_observer(payroll, fee, &end_of_msg)
+PayrollObserver.new(employee)
+FeeCollectorObserver.new(employee)
 employee.salary = 275_000
