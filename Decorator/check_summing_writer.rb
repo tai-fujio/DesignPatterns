@@ -9,7 +9,7 @@ class CheckSummingWriter < WriterDecorator
   end
 
   def write_line(line)
-    line.each_byte { |byte| p byte && @check_sum = (@check_sum + byte) % 256 }
+    line.each_byte { |byte| @check_sum = (@check_sum + byte) % 256 }
     @real_writer.write_line(line)
   end
 end
