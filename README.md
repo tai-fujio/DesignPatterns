@@ -1,3 +1,4 @@
 # DesignPatterns
 
 -   Decorator
+-   Observer
