@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="radio" name="card" value="MasterCard" onclick="payOnCredit(this)">マスターカード
+    <input type="radio" name="card" value="VisaCard" onclick="payOnCredit(this)"/>ビザ
+    <input type="radio" name="card" value="JCB" onclick="payOnCredit(this)"/>JCB
+    <br />
+    <span id="result"></span>
+    <script type="text/javascript">
+        class PayStrategy {
+            pay(price){};
+        };
+        class MasterCard extends PayStrategy{
+            pay(price){
+                document.getElementById("result").innerHTML ="Pay" + price +"円 by MasterCard";
+            };
+        };
+        class VisaCard extends PayStrategy{
+            pay(price){
+                document.getElementById("result").innerHTML ="Pay"+ price +"円 by Visa";
+            };
+        };
+        class JCB extends PayStrategy{
+            pay(price){
+                document.getElementById("result").innerHTML ="Pay"+ price +"円 by JCB";
+            };
+        };
+        class PayManager{
+            constructor(payStrategy){
+                this.payStrategy = payStrategy;
+            };
+            pay(price){
+                return this.payStrategy.pay(price);
+            };
+        };
+        function payOnCredit(obj){
+            var className = obj.value;
+            var payManager = new PayManager(eval("new " + className + "()"));
+            payManager.pay(19_999);
+        };
+    </script>
+</html>
